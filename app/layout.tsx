@@ -3,14 +3,15 @@ import type { Metadata } from "next"
 import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
 import { Analytics } from "@vercel/analytics/next"
+import { AuthProvider } from "@/lib/auth-context"
 import { DataProvider } from "@/lib/data-context"
 import { ThemeProvider } from "@/lib/theme-provider"
 import { Suspense } from "react"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "ExpenseFlow - Modern Expense Management",
-  description: "Streamline your expense reimbursement process with multi-level approvals",
+  title: "OneFlow - Plan to Bill in One Place",
+  description: "Streamline your entire business workflow from project planning to final billing",
   generator: "v0.app",
 }
 
@@ -24,7 +25,9 @@ export default function RootLayout({
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         <Suspense fallback={<div>Loading...</div>}>
           <ThemeProvider>
-            <DataProvider>{children}</DataProvider>
+            <AuthProvider>
+              <DataProvider>{children}</DataProvider>
+            </AuthProvider>
           </ThemeProvider>
         </Suspense>
         <Analytics />
